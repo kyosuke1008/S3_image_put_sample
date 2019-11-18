@@ -1,0 +1,574 @@
+swagger: "2.0"
+info:
+  title: APPO API
+  description: APPOのswagger
+  version: 0.9.0
+  termsOfService: https://www.tokyotower.co.jp/
+  contact:
+    email: astaxie@gmail.com
+basePath: /v1
+paths:
+  /event/:
+    get:
+      tags:
+      - event
+      description: get events
+      operationId: EventController.イベント一覧取得
+      parameters:
+      - in: query
+        name: from
+        description: from
+        required: true
+        type: integer
+        format: int64
+      - in: query
+        name: size
+        description: size
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.EventList'
+        "403":
+          description: :eid is empty
+    post:
+      tags:
+      - event
+      description: create object
+      operationId: EventController.イベント登録
+      parameters:
+      - in: body
+        name: body
+        description: body for user content
+        required: true
+        schema:
+          $ref: '#/definitions/models.RequestEvent'
+      responses:
+        "200":
+          description: '{string} models.EventGetId'
+        "403":
+          description: body is empty
+  /event/{eid}:
+    get:
+      tags:
+      - event
+      description: find object by eid
+      operationId: EventController.イベント詳細取得
+      parameters:
+      - in: path
+        name: eid
+        description: イベントID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Event'
+        "403":
+          description: :eid is empty
+    put:
+      tags:
+      - event
+      description: update the object
+      operationId: EventController.イベント変更
+      parameters:
+      - in: path
+        name: eid
+        description: イベントID
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: The body
+        required: true
+        schema:
+          $ref: '#/definitions/models.Event'
+      responses:
+        "200":
+          description: '{string} update success!'
+        "403":
+          description: :eid is empty
+    delete:
+      tags:
+      - event
+      description: delete the object
+      operationId: EventController.イベント削除
+      parameters:
+      - in: path
+        name: eid
+        description: イベントID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} delete success!'
+        "403":
+          description: eid is empty
+  /event/add_member:
+    put:
+      tags:
+      - event
+      description: update the member
+      operationId: EventController.イベントメンバー追加
+      parameters:
+      - in: body
+        name: body
+        description: The body
+        required: true
+        schema:
+          $ref: '#/definitions/models.AddMember'
+      responses:
+        "200":
+          description: '{string} add member success!'
+        "403":
+          description: :eid is empty
+  /event/delete_member:
+    put:
+      tags:
+      - event
+      description: update the member
+      operationId: EventController.イベント参加メンバー削除
+      parameters:
+      - in: body
+        name: body
+        description: The body
+        required: true
+        schema:
+          $ref: '#/definitions/models.AddMember'
+      responses:
+        "200":
+          description: '{string} add member success!'
+        "403":
+          description: :eid is empty
+  /event/search:
+    get:
+      tags:
+      - event
+      description: get all objects
+      operationId: EventController.ワード検索
+      parameters:
+      - in: query
+        name: word
+        description: 検索ワード
+        required: true
+        type: string
+      - in: query
+        name: from
+        description: from
+        required: true
+        type: integer
+        format: int64
+      - in: query
+        name: size
+        description: size
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.EventList'
+        "403":
+          description: :eid is empty
+  /event/user_event:
+    get:
+      tags:
+      - event
+      description: get all objects
+      operationId: EventController.ユーザイベント取得
+      parameters:
+      - in: query
+        name: uid
+        description: ユーザID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.EventList'
+        "403":
+          description: :eid is empty
+  /image/{id}:
+    put:
+      tags:
+      - image
+      description: create Images
+      operationId: ImageController.画像登録
+      parameters:
+      - in: path
+        name: id
+        description: imageID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} image path'
+        "403":
+          description: body is empty
+  /image/icon/{id}:
+    put:
+      tags:
+      - image
+      description: create Images
+      operationId: ImageController.画像登録
+      parameters:
+      - in: path
+        name: id
+        description: imageID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} image path'
+        "403":
+          description: body is empty
+  /message/:
+    get:
+      tags:
+      - message
+      description: get Message by eid
+      operationId: MessageController.チャットメッセージ取得
+      parameters:
+      - in: query
+        name: eid
+        description: イベントID
+        required: true
+        type: string
+      - in: query
+        name: from
+        description: from
+        required: true
+        type: integer
+        format: int64
+      - in: query
+        name: size
+        description: size
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.MessageList'
+        "403":
+          description: :uid is empty
+    post:
+      tags:
+      - message
+      description: create Messages
+      operationId: MessageController.チャットメッセージ登録
+      parameters:
+      - in: body
+        name: body
+        description: body for Message 2018-10-25T12:00:00.000
+        required: true
+        schema:
+          $ref: '#/definitions/models.RequestMessage'
+      responses:
+        "200":
+          description: '{int} models.ElasticRequestMessage.Id'
+        "403":
+          description: body is empty
+  /point/:
+    get:
+      tags:
+      - point
+      description: create Images
+      operationId: PointController.ユーザ位置取得
+      parameters:
+      - in: query
+        name: eid
+        description: eid
+        required: true
+        type: string
+      - in: query
+        name: uid
+        description: uid
+        required: true
+        type: string
+      - in: query
+        name: lat
+        description: lat
+        required: true
+        type: number
+      - in: query
+        name: lon
+        description: lon
+        required: true
+        type: number
+      responses:
+        "200":
+          description: '{string} points'
+        "403":
+          description: body is empty
+  /user/:
+    post:
+      tags:
+      - user
+      description: create users
+      operationId: UserController.ユーザ登録
+      parameters:
+      - in: body
+        name: body
+        description: body for user content
+        required: true
+        schema:
+          $ref: '#/definitions/models.RequestUser'
+      responses:
+        "200":
+          description: '{int} models.ElasticRequestUser.Id'
+        "403":
+          description: body is empty
+  /user/{uid}:
+    get:
+      tags:
+      - user
+      description: get user by uid
+      operationId: UserController.ユーザ取得
+      parameters:
+      - in: path
+        name: uid
+        description: The key for staticblock
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.User'
+        "403":
+          description: :uid is empty
+    put:
+      tags:
+      - user
+      description: update the user
+      operationId: UserController.ユーザ更新
+      parameters:
+      - in: path
+        name: uid
+        description: The uid you want to update
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: body for user content
+        required: true
+        schema:
+          $ref: '#/definitions/models.RequestUser'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.RequestUser'
+        "403":
+          description: エラーメッセージ
+    delete:
+      tags:
+      - user
+      description: delete the user
+      operationId: UserController.ユーザ削除
+      parameters:
+      - in: path
+        name: uid
+        description: The uid you want to delete
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} delete success!'
+        "403":
+          description: uid is empty
+  /user/login:
+    get:
+      tags:
+      - user
+      description: Logs user into the system
+      operationId: UserController.Login
+      parameters:
+      - in: query
+        name: email
+        description: The username for login
+        required: true
+        type: string
+      - in: query
+        name: password
+        description: The password for login
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.User'
+definitions:
+  models.AddMember:
+    title: AddMember
+    type: object
+    properties:
+      eid:
+        type: string
+      uid:
+        type: string
+  models.Event:
+    title: Event
+    type: object
+    properties:
+      description:
+        type: string
+      event_key:
+        type: string
+      image_url:
+        type: string
+      members:
+        type: array
+        items:
+          $ref: '#/definitions/models.Member'
+      open_time:
+        type: string
+      organizer:
+        type: string
+      place:
+        type: string
+      tag:
+        type: array
+        items:
+          type: string
+      title:
+        type: string
+  models.EventList:
+    title: EventList
+    type: object
+    properties:
+      _id:
+        type: string
+      event_key:
+        type: string
+      image_url:
+        type: string
+      open_time:
+        type: string
+      organizer:
+        type: string
+      place:
+        type: string
+      tag:
+        type: array
+        items:
+          type: string
+      title:
+        type: string
+  models.Member:
+    title: Member
+    type: object
+    properties:
+      id:
+        type: string
+      image:
+        type: string
+      name:
+        type: string
+  models.MessageList:
+    title: MessageList
+    type: object
+    properties:
+      is_image:
+        type: boolean
+      talk:
+        type: string
+      uid:
+        type: string
+      user_image_url:
+        type: string
+      user_name:
+        type: string
+  models.RequestEvent:
+    title: RequestEvent
+    type: object
+    properties:
+      description:
+        type: string
+      event_key:
+        type: string
+      image_url:
+        type: string
+      open_time:
+        type: string
+      organizer:
+        type: string
+      place:
+        type: string
+      tag:
+        type: array
+        items:
+          type: string
+      title:
+        type: string
+  models.RequestMessage:
+    title: RequestMessage
+    type: object
+    properties:
+      eid:
+        type: string
+      is_image:
+        type: boolean
+      talk:
+        type: string
+      uid:
+        type: string
+      user_image_url:
+        type: string
+      user_name:
+        type: string
+  models.RequestUser:
+    title: RequestUser
+    type: object
+    properties:
+      device_token:
+        type: string
+      email:
+        type: string
+      image:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+  models.User:
+    title: User
+    type: object
+    properties:
+      _id:
+        type: string
+      device_token:
+        type: string
+      email:
+        type: string
+      image:
+        type: string
+      name:
+        type: string
+      token:
+        type: string
+tags:
+- name: event
+  description: |
+    Operations about object
+- name: user
+  description: |
+    Operations about Users
+- name: message
+  description: |
+    Operations about Messages
+- name: image
+  description: |
+    Operations about Images
+- name: point
+  description: |
+    Operations about Messages
